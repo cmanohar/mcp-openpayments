@@ -12,6 +12,38 @@ import { buildQuery, eq, like, type Condition } from "../lib/query-builder.js";
 import { getDistributionId } from "../lib/distributions.js";
 import { sumPayments, groupByField, topN } from "../lib/formatters.js";
 
+const GENERAL_PROPERTIES = [
+  "Covered_Recipient_First_Name",
+  "Covered_Recipient_Last_Name",
+  "Covered_Recipient_NPI",
+  "Covered_Recipient_Specialty_1",
+  "Recipient_City",
+  "Recipient_State",
+  "Total_Amount_of_Payment_USDollars",
+  "Nature_of_Payment_or_Transfer_of_Value",
+  "Date_of_Payment",
+  "Applicable_Manufacturer_or_Applicable_GPO_Making_Payment_Name",
+  "Name_of_Drug_or_Biological_or_Device_or_Medical_Supply_1",
+  "Program_Year",
+];
+
+const RESEARCH_PROPERTIES = [
+  "Covered_Recipient_First_Name",
+  "Covered_Recipient_Last_Name",
+  "Covered_Recipient_NPI",
+  "Covered_Recipient_Specialty_1",
+  "Recipient_City",
+  "Recipient_State",
+  "Total_Amount_of_Payment_USDollars",
+  "Date_of_Payment",
+  "Applicable_Manufacturer_or_Applicable_GPO_Making_Payment_Name",
+  "Name_of_Study",
+  "ClinicalTrials_Gov_Identifier",
+  "Context_of_Research",
+  "Name_of_Drug_or_Biological_or_Device_or_Medical_Supply_1",
+  "Program_Year",
+];
+
 export function registerPhysicianProfile(server: McpServer): void {
   server.tool(
     "openpayments_physician_profile",
@@ -40,6 +72,7 @@ export function registerPhysicianProfile(server: McpServer): void {
       // Fetch general payments
       const generalBody = buildQuery({
         conditions,
+        properties: GENERAL_PROPERTIES,
         sorts: [{ property: "Total_Amount_of_Payment_USDollars", order: "desc" }],
         limit: 500,
       });
@@ -48,6 +81,7 @@ export function registerPhysicianProfile(server: McpServer): void {
       // Fetch research payments
       const researchBody = buildQuery({
         conditions,
+        properties: RESEARCH_PROPERTIES,
         sorts: [{ property: "Total_Amount_of_Payment_USDollars", order: "desc" }],
         limit: 500,
       });
