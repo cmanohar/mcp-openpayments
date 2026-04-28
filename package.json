@@ -2,7 +2,7 @@
   "name": "mcp-openpayments",
   "version": "0.1.0",
   "description": "MCP server for CMS Open Payments (Sunshine Act) — physician-industry payments, manufacturer spending, research funding, teaching hospital payments. No API key required.",
-  "author": "Chinmay Patil",
+  "author": "Chinmay Manohar",
   "license": "MIT",
   "type": "module",
   "bin": {
